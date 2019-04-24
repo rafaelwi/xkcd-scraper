@@ -101,3 +101,11 @@ def get_img_url(raw_url):
     img_url = img_url_line.split(' ')[4]
 
     return img_url
+
+def download_img(raw_url, img_url):
+    # Create filename
+    filename = "imgs/" + raw_url.split('/')[3] + ".png"
+
+    # Download the image
+    urllib.request.urlretrieve(img_url, filename)
+    log_message ("Saved image from URL <" + raw_url + "> as " + filename)
