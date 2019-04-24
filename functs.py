@@ -58,13 +58,19 @@ Out: The message
 def log_message(m):
     print (m)
 
-
-def get_url(args):
+"""
+    get_raw_url(args): Gets the url and verifies that it is valid
+In
+    args: List of arguements
+Out: Returns the URL entered
+"""
+def get_raw_url(args):
     # Check number of args passed in
     # If there are not 2 args, then exit
     if len(args) != 2:
         log_message ("Usage: python3 main.py <xkcd url>")
         sys.exit()
+
     # Otherwise, take the 2nd arg as the url
     else:
         raw_url = args[1]
@@ -76,3 +82,22 @@ def get_url(args):
 
     log_message ("Got URL: " + raw_url)
     return raw_url
+
+
+def get_img_url(raw_url):
+    # Get the page and place into BeautifulSoup object
+    raw_html = get_page(raw_url)
+    bs4_html = BeautifulSoup(raw_html, 'html.parser')
+    log_message("Got page from URL <" + raw_url + ">")
+
+    # Get only the text from bs4_html
+    bs4_text = bs4_html.get_text()
+    img_url_location = bs4_text.index('Image URL') # 'Image URL is what we are searching for in the text
+    bs4_text = bs4_text[img_url_location:]
+    bs4_text_list = bs4_text.splitlines()
+
+    # Get line that has the image URL and return it
+    img_url_line = bs4_text_list[0]
+    img_url = img_url_line.split(' ')[4]
+
+    return img_url
