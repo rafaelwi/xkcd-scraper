@@ -57,3 +57,22 @@ Out: The message
 """
 def log_message(m):
     print (m)
+
+
+def get_url(args):
+    # Check number of args passed in
+    # If there are not 2 args, then exit
+    if len(args) != 2:
+        log_message ("Usage: python3 main.py <xkcd url>")
+        sys.exit()
+    # Otherwise, take the 2nd arg as the url
+    else:
+        raw_url = args[1]
+
+    # Verify that the URL is valid
+    if (raw_url.split('/')[2] != "xkcd.com") |  (not (raw_url.split('/')[3]).isdecimal()):
+        log_message ("Error: URL is formatted incorrectly")
+        sys.exit()
+
+    log_message ("Got URL: " + raw_url)
+    return raw_url

@@ -13,21 +13,11 @@ import functs as xkcd
 """
     Main Program
 """
+## Variables ##
 searchStr = 'Image URL'
 
-# Check if the number of args entered is correct
-if len(sys.argv) != 2:
-    xkcd.log_message ("Usage: python3 main.py <xkcd url>")
-    sys.exit()
-else: 
-    raw_url = sys.argv[1]
-
-    # Verify that the URL is valid
-    if (raw_url.split('/')[2] != "xkcd.com") |  (not (raw_url.split('/')[3]).isdecimal()):
-        xkcd.log_message ("Error: URL is formatted incorrectly")
-        sys.exit()
-
-    xkcd.log_message ("Got URL: " + raw_url)
+# Get URL
+raw_url = xkcd.get_url(sys.argv)
 
 # Get the page and place into Beautiful Soup Object
 raw_html = xkcd.get_page(raw_url)
