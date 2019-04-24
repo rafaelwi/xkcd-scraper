@@ -62,14 +62,17 @@ searchStr = 'Image URL'
 
 # Check if the number of args entered is correct
 if len(sys.argv) != 2:
-    print ("Usage: python3 main.py <xkcd url>")
+    log_message ("Usage: python3 main.py <xkcd url>")
     sys.exit()
 else: 
     raw_url = sys.argv[1]
-    log_message ("Got URL: " + raw_url)
 
-    # TODO: Validate that a URL entered is in the valid format of
-    # "https://xkcd.com/wxyz/"
+    # Verify that the URL is valid
+    if (raw_url.split('/')[2] != "xkcd.com") |  (not (raw_url.split('/')[3]).isdecimal()):
+        log_message ("Error: URL is formatted incorrectly")
+        sys.exit()
+
+    log_message ("Got URL: " + raw_url)
 
 # Get the page and place into Beautiful Soup Object
 raw_html = get_page(raw_url)
