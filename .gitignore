@@ -1,2 +1,3 @@
 2139.txt
 imgs/*
+__pycache__/*.pyc
