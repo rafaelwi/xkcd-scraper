@@ -49,9 +49,10 @@ def log_error(e):
     Main Program
 """
 searchStr = 'Image URL'
+raw_url = 'https://xkcd.com/2139/'
 
 # Get the page and place into Beautiful Soup Object
-raw_html = get_page('https://xkcd.com/2139/')
+raw_html = get_page(raw_url)
 bs4_html = BeautifulSoup(raw_html, 'html.parser')
 
 # Get only the text from raw_html and then find the image URL
@@ -61,4 +62,8 @@ bs4_text = bs4_text[start:]
 bs4_text_list = bs4_text.splitlines() # index 0 will be the line containing the image URL
 img_url_line = bs4_text_list[0]
 img_url = img_url_line.split(' ')[4] # now have the image url
+filename = "imgs/" + raw_url.split('/')[3] + ".png"
+
+# Download the image
+urllib.request.urlretrieve(img_url, filename)
 #eop
