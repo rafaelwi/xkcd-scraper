@@ -44,8 +44,19 @@ Out: Prints the expception that has occured
 def log_error(e):
     print(e)
 
-searchStr = 'embedding'
-got_page = get_page('https://xkcd.com/2139/')
-wp = BeautifulSoup(got_page, 'html.parser')
-print (wp.prettify())
+"""
+    Main Program
+"""
+searchStr = 'Image URL'
 
+# Get the page and place into Beautiful Soup Object
+raw_html = get_page('https://xkcd.com/2139/')
+bs4_html = BeautifulSoup(raw_html, 'html.parser')
+
+# Get only the text from raw_html and then find the image URL
+bs4_text = bs4_html.get_text()
+start = bs4_text.index(searchStr)
+bs4_text = bs4_text[start:]
+bs4_text_list = bs4_text.splitlines() # index 0 will be the line containing the image URL
+print (bs4_text_list[0])
+#eop
