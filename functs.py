@@ -114,3 +114,23 @@ def download_img(raw_url, img_url):
     # Download the image
     urllib.request.urlretrieve(img_url, filename)
     log_message ("Saved image from URL <" + raw_url + "> as " + filename)
+
+
+def get_latest():
+    # Get the page and place into BeautifulSoup object
+    raw_html = get_page("https://xkcd.com/")
+    bs4_html = BeautifulSoup(raw_html, 'html.parser')
+
+    # Get only the text from bs4_html
+    bs4_text = bs4_html.get_text()
+    latest_url_location = bs4_text.index('Permanent')
+    bs4_text = bs4_text[latest_url_location:]
+    bs4_text_list = bs4_text.splitlines()
+
+    # Get the line that has the image URL and return it
+    latest_url_line = bs4_text_list[0]
+    latest_value = latest_url_line.split('/')[3]
+
+
+    # Return the value
+    return latest_value
