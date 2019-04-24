@@ -24,7 +24,7 @@ def get_page(url):
                 return None
 
     except RequestException as e:
-            log_error('Error during requests to {0} : {1}'.format(url, str(e)))
+            log_message('Error during requests to {0} : {1}'.format(url, str(e)))
             return None
 
 
@@ -40,16 +40,6 @@ def is_good_response(resp):
 
 
 """
-log_error(e): Prints an error from exception
-In
-    e: An exception
-Out: Prints the expception that has occured
-"""
-def log_error(e):
-    print(e)
-
-
-"""
 log_message(m): Prints out the message passed in. Used for debugging
 In
     m: A message
@@ -57,6 +47,7 @@ Out: The message
 """
 def log_message(m):
     print (m)
+
 
 """
     get_raw_url(args): Gets the url and verifies that it is valid
@@ -84,6 +75,12 @@ def get_raw_url(args):
     return raw_url
 
 
+"""
+get_img_url: Gets the image URL from the page of the URL passed in
+In
+    raw_url: URL of page that will be searched
+Out: Returns the URL of the image
+"""
 def get_img_url(raw_url):
     # Get the page and place into BeautifulSoup object
     raw_html = get_page(raw_url)
@@ -102,6 +99,14 @@ def get_img_url(raw_url):
 
     return img_url
 
+
+"""
+download_img(raw_url, img_url): Downloads the image located at img_url
+In:
+    raw_url: Used for determining filename
+    img_url: URL of image to be downloaded
+Out: None
+"""
 def download_img(raw_url, img_url):
     # Create filename
     filename = "imgs/" + raw_url.split('/')[3] + ".png"
