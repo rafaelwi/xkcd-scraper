@@ -66,6 +66,7 @@ def get_raw_url(args):
         # Randomly generate a number
         random_comic = random.randint(1, int(latest))
         raw_url = "https://xkcd.com/" + str(random_comic) + "/"
+        log_message ("Got URL: random comic");
 
 
     # If there are two arguements
