@@ -1,4 +1,4 @@
-# xkcdownlaoder
+# xkcdownloader
 xkcd comic scraper script in python3
 
 # Features
