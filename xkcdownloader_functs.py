@@ -1,4 +1,4 @@
-# xkcd comic scraper functions
+# xkcdownloader_functions.py
 # github: rafaelwi
 
 # Imports
