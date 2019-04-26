@@ -3,7 +3,7 @@
 
 # Imports
 import sys
-import functs as xkcd
+import xkcdownloader_functs as xkcd
 
 """
     Main Program
