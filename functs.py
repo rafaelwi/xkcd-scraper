@@ -1,12 +1,13 @@
-# xkcd comic scraper
+# xkcd comic scraper functions
 # github: rafaelwi
 
 # Imports
-from requests import get
 from requests.exceptions import RequestException
+from requests import get
 from contextlib import closing
 from bs4 import BeautifulSoup
 import urllib.request
+import random
 import sys
 
 """
@@ -57,21 +58,31 @@ Out: Returns the URL entered
 """
 def get_raw_url(args):
     # Check number of args passed in
-    # If there are not 2 args, then exit
-    if len(args) != 2:
+    # If there is only one argument passed in, download a random
+    if len(args) == 1:
+        # Get the latest xkcd value
+        latest = get_latest()
+
+        # Randomly generate a number
+        random_comic = random.randint(1, int(latest))
+        raw_url = "https://xkcd.com/" + str(random_comic) + "/"
+
+
+    # If there are two arguements
+    elif len(args) == 2:
+        raw_url = args[1]
+
+        # Verify that the URL is valid
+        if (raw_url.split('/')[2] != "xkcd.com") |  (not (raw_url.split('/')[3]).isdecimal()):
+            log_message ("Error: URL is formatted incorrectly")
+            sys.exit()
+
+        log_message ("Got URL: " + raw_url)
+    # Otherwise, if there are more than 2 args, exit
+    else:
         log_message ("Usage: python3 main.py <xkcd url>")
         sys.exit()
 
-    # Otherwise, take the 2nd arg as the url
-    else:
-        raw_url = args[1]
-
-    # Verify that the URL is valid
-    if (raw_url.split('/')[2] != "xkcd.com") |  (not (raw_url.split('/')[3]).isdecimal()):
-        log_message ("Error: URL is formatted incorrectly")
-        sys.exit()
-
-    log_message ("Got URL: " + raw_url)
     return raw_url
 
 
@@ -116,6 +127,11 @@ def download_img(raw_url, img_url):
     log_message ("Saved image from URL <" + raw_url + "> as " + filename)
 
 
+"""
+get_latest(): Gets the number of the latest xkcd comic
+In: None
+Out: Returns the number of the latest xkcd comic
+"""
 def get_latest():
     # Get the page and place into BeautifulSoup object
     raw_html = get_page("https://xkcd.com/")
