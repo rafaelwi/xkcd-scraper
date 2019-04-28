@@ -65,32 +65,37 @@ Returns:
 """
 def get_raw_url(args):
     # Check number of args passed in
-    # If there is only one argument passed in, download a random
-    if len(args) == 1:
-        # Get the latest xkcd value
-        latest = get_latest()
-
-        # Randomly generate a number
-        random_comic = random.randint(1, int(latest))
-        raw_url = "https://xkcd.com/" + str(random_comic) + "/"
-        log_message ("Got URL: random comic");
-
-
-    # If there are two arguements
-    elif len(args) == 2:
-        raw_url = args[1]
-
-        # Verify that the URL is valid
-        if (raw_url.split('/')[2] != "xkcd.com") |  (not (raw_url.split('/')[3]).isdecimal()):
-            log_message ("Error: URL is formatted incorrectly")
-            sys.exit()
-
-        log_message ("Got URL: " + raw_url)
-    # Otherwise, if there are more than 2 args, exit
-    else:
-        log_message ("Usage: python3 main.py <xkcd url>")
+    # If there is not 2 args passed in
+    if len(args) != 2:
+        log_message ("Usage: python3 main.py <xkcd url>") # TODO: UPDATE WITH POSSIBLE CASES
         sys.exit()
+    # If there are 2 args passed in
+    else:
+        # Check what was passed in
+        # Check if 'rand' or 'random' was passed in
+        if args[1].lower() in ('rand', 'random'):
+            # Get the latest xkcd value
+            latest = get_latest()
 
+            # Randomly generate a number
+            random_comic = random.randint(1, int(latest))
+            raw_url = "https://xkcd.com/" + str(random_comic) + "/"
+            log_message ("Got URL: random comic")
+        
+        # If just a number is passed in
+        elif args[1].isdecimal():
+            raw_url = 'https://xkcd.com/' + args[1] + '/'        
+            
+        # If a xkcd comic url is passed in (always check last)
+        elif (args[1].split('/')[2] == 'xkcd.com') & (args[1].split('/')[3].isdecimal()):
+                raw_url = args[1]
+
+        # If one of the possible inputs is not passed in
+        else:
+            log_message("Error: Ending execution due to invalid input")
+            log_message("Usage: python3 xkcdownloader.py <xkcd url> OR python3 xkcdownlaoder.py random OR python3 xkcdownloader.py <xkcd number>")
+            sys.exit()
+        
     return raw_url
 
 
