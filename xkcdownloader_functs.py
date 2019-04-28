@@ -151,3 +151,18 @@ def get_latest():
 
     # Return the value
     return latest_value
+
+
+def validate_url (url):
+    # Get the latest value for the comic
+    latest_comic = get_latest()
+
+    # Get the number from the URL
+    comic_value = url.split('/')[3]
+
+    if ((int(comic_value) > int(latest_comic)) | (int(comic_value) <= 0)):
+        log_message("Error: Ending execution due to comic not being in valid range")
+        sys.exit()
+    else:
+        log_message("COMIC VALID AND OK AND COOL")
+        return
