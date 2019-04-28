@@ -67,7 +67,7 @@ def get_raw_url(args):
     # Check number of args passed in
     # If there is not 2 args passed in
     if len(args) != 2:
-        log_message ("Usage: python3 main.py <xkcd url>") # TODO: UPDATE WITH POSSIBLE CASES
+        log_message("Usage: python3 xkcdownloader.py <xkcd url> | python3 xkcdownlaoder.py random | python3 xkcdownloader.py <xkcd number>")
         sys.exit()
     # If there are 2 args passed in
     else:
@@ -93,7 +93,7 @@ def get_raw_url(args):
         # If one of the possible inputs is not passed in
         else:
             log_message("Error: Ending execution due to invalid input")
-            log_message("Usage: python3 xkcdownloader.py <xkcd url> OR python3 xkcdownlaoder.py random OR python3 xkcdownloader.py <xkcd number>")
+            log_message("Usage: python3 xkcdownloader.py <xkcd url> | python3 xkcdownlaoder.py random | python3 xkcdownloader.py <xkcd number>")
             sys.exit()
         
     return raw_url
