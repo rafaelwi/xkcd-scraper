@@ -79,8 +79,17 @@ def get_raw_url(args):
 
             # Randomly generate a number
             random_comic = random.randint(1, int(latest))
-            raw_url = "https://xkcd.com/" + str(random_comic) + "/"
+            raw_url = 'https://xkcd.com/' + str(random_comic) + '/'
             log_message ("Got URL: random comic")
+
+        # If 'new' or 'newest' or 'latest' is passed in
+        if args[1].lower() in ('new', 'newest', 'latest'):
+            # Get the latest xkcd value
+            latest = get_latest()
+
+            # Create URL
+            raw_url = 'https://xkcd.com/' + str(latest) + '/'
+            log_message ("Got URL: " + raw_url)
         
         # If just a number is passed in
         elif args[1].isdecimal():
