@@ -10,11 +10,12 @@ import urllib.request
 import random
 import sys
 
-"""
-get_page(url): Gets the page source of a requested website
-In
+
+"""Gets the page source of a requested website
+Args:
     url: The URL of the page that the source will be taken from
-Out: Returns the source code of the URL passed in
+Returns: 
+    the source code of the URL passed in
 """
 def get_page(url):
     try:
@@ -29,32 +30,38 @@ def get_page(url):
             return None
 
 
-"""
-is_good_response(resp): Checks if the response from the URL is good
-In
+"""Checks if the response from the URL is good
+
+Args:
     resp: Respond from website of connection status
-Out: Returns true if a successful connection has been made and false otherwise
+
+Returns: 
+    true if a successful connection has been made and false otherwise
 """
 def is_good_response(resp):
     content_type = resp.headers['Content-Type'].lower()
     return (resp.status_code == 200 and content_type is not None and content_type.find('html') > -1)
 
 
-"""
-log_message(m): Prints out the message passed in. Used for debugging
-In
+"""Prints out the message passed in. Used for debugging
+
+Args:
     m: A message
-Out: The message
+
+Returns: 
+    the message
 """
 def log_message(m):
     print (m)
 
 
-"""
-    get_raw_url(args): Gets the url and verifies that it is valid
-In
-    args: List of arguements
-Out: Returns the URL entered
+"""Gets the url and verifies that it is valid
+
+Args:
+    args: List of arguements from the command line
+
+Returns: 
+    the URL entered
 """
 def get_raw_url(args):
     # Check number of args passed in
@@ -87,11 +94,13 @@ def get_raw_url(args):
     return raw_url
 
 
-"""
-get_img_url: Gets the image URL from the page of the URL passed in
-In
+"""Gets the image URL from the page of the URL passed in
+
+Args:
     raw_url: URL of page that will be searched
-Out: Returns the URL of the image
+
+Returns: 
+    the URL of the image
 """
 def get_img_url(raw_url):
     # Get the page and place into BeautifulSoup object
@@ -112,12 +121,14 @@ def get_img_url(raw_url):
     return img_url
 
 
-"""
-download_img(raw_url, img_url): Downloads the image located at img_url
-In:
+"""Downloads the image located at img_url
+
+Args:
     raw_url: Used for determining filename
     img_url: URL of image to be downloaded
-Out: None
+
+Returns: 
+    no value; saves the image that is located at the URL passed in by img_url
 """
 def download_img(raw_url, img_url):
     # Create filename
@@ -128,10 +139,10 @@ def download_img(raw_url, img_url):
     log_message ("Saved image from URL <" + raw_url + "> as " + filename)
 
 
-"""
-get_latest(): Gets the number of the latest xkcd comic
-In: None
-Out: Returns the number of the latest xkcd comic
+"""Gets the number of the latest xkcd comic
+
+Returns: 
+    the number of the latest xkcd comic
 """
 def get_latest():
     # Get the page and place into BeautifulSoup object
@@ -152,7 +163,14 @@ def get_latest():
     # Return the value
     return latest_value
 
+"""Validates that the URL passed from the command line is valid
 
+Args:
+    url: URL of the page that contains the xkcd comic
+
+Returns:
+    nothing if the comic is valid or exits otherwise
+"""
 def validate_url (url):
     # Get the latest value for the comic
     latest_comic = get_latest()
@@ -164,5 +182,4 @@ def validate_url (url):
         log_message("Error: Ending execution due to comic not being in valid range")
         sys.exit()
     else:
-        log_message("COMIC VALID AND OK AND COOL")
         return
