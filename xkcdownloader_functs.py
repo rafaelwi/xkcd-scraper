@@ -82,17 +82,17 @@ def get_raw_url(args):
         
         # If just a number is passed in
         elif args[1].isdecimal():
-            raw_url = 'https://xkcd.com/' + args[1] + '/'        
-            
-        # If a xkcd comic url is passed in (always check last)
-        elif (args[1].split('/')[2] == 'xkcd.com') & (args[1].split('/')[3].isdecimal()):
-                raw_url = args[1]
+            raw_url = 'https://xkcd.com/' + args[1] + '/'
 
-        # If one of the possible inputs is not passed in
-        else:
+        # If two arguments are passed in and cannot be split up as a link
+        elif (args[1].split('/')[2] != 'xkcd.com') | (not (args[1].split('/')[3].isdecimal())):
             log_message("Error: Ending execution due to invalid input")
             log_message("Usage: python3 xkcdownloader.py <xkcd url> | python3 xkcdownlaoder.py random | python3 xkcdownloader.py <xkcd number>")
             sys.exit()
+            
+        # Otherwise, whatever arguement that has been passed in will be a valid link
+        else:
+                raw_url = args[1]
     return raw_url
 
 
