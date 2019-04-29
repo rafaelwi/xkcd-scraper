@@ -74,22 +74,11 @@ def get_raw_url(args):
         # Check what was passed in
         # Check if 'rand' or 'random' was passed in
         if args[1].lower() in ('rand', 'random'):
-            # Get the latest xkcd value
-            latest = get_latest()
-
-            # Randomly generate a number
-            random_comic = random.randint(1, int(latest))
-            raw_url = 'https://xkcd.com/' + str(random_comic) + '/'
-            log_message ("Got URL: random comic")
+            raw_url = get_random_comic_url()
 
         # If 'new' or 'newest' or 'latest' is passed in
-        if args[1].lower() in ('new', 'newest', 'latest'):
-            # Get the latest xkcd value
-            latest = get_latest()
-
-            # Create URL
-            raw_url = 'https://xkcd.com/' + str(latest) + '/'
-            log_message ("Got URL: " + raw_url)
+        elif args[1].lower() in ('new', 'newest', 'latest'):
+            raw_url = get_latest_comic_url()
         
         # If just a number is passed in
         elif args[1].isdecimal():
@@ -104,7 +93,6 @@ def get_raw_url(args):
             log_message("Error: Ending execution due to invalid input")
             log_message("Usage: python3 xkcdownloader.py <xkcd url> | python3 xkcdownlaoder.py random | python3 xkcdownloader.py <xkcd number>")
             sys.exit()
-        
     return raw_url
 
 
@@ -197,3 +185,26 @@ def validate_url (url):
         sys.exit()
     else:
         return
+
+
+def get_random_comic_url ():
+    # Get the latest xkcd value
+    latest = get_latest()
+
+    # Randomly generate a number
+    random_comic = random.randint(1, int(latest))
+    raw_url = 'https://xkcd.com/' + str(random_comic) + '/'
+    log_message ("Got URL: random comic")
+    return raw_url
+
+
+def get_latest_comic_url ():
+    # Get the latest xkcd value
+    latest = get_latest()
+
+    # Create URL
+    raw_url = 'https://xkcd.com/' + str(latest) + '/'
+    log_message ("Got URL: " + raw_url)
+    return raw_url
+
+
