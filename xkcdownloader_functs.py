@@ -187,6 +187,11 @@ def validate_url (url):
         return
 
 
+"""Gets a random comic URL
+
+Returns:
+    the URL of a random comic
+"""
 def get_random_comic_url ():
     # Get the latest xkcd value
     latest = get_latest()
@@ -198,6 +203,11 @@ def get_random_comic_url ():
     return raw_url
 
 
+"""Gets the URL of the latest comic
+
+Returns:
+    the URL of the latest comic
+"""
 def get_latest_comic_url ():
     # Get the latest xkcd value
     latest = get_latest()
