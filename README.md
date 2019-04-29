@@ -20,10 +20,13 @@ To get a specific comic:
 To get a random comic:
 `python3 xkcdownloader.py random`
 
+To get the latest comic:
+`python3 xkcdownloader.py latest`
+
 
 # To add
 - ~~Ability to download comics from just their number~~
-- Ability to get the latest comic
+- ~~Ability to get the latest comic~~
 - Ability to configure where the images are downloaded
 - ~~Update function comments to PEP8 standards~~
 - Batch download function
