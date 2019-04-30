@@ -205,8 +205,7 @@ Returns:
     true if a successful connection has been made and false otherwise
 """
 def is_good_response(resp):
-    content_type = resp.headers['Content-Type'].lower()
-    return (resp.status_code == 200 and content_type is not None and content_type.find('html') > -1)
+    return (resp.status_code == 200 and resp.headers['Content-Type'].lower() is not None and resp.headers['Content-Type'].lower().find('html') > -1)
 # end is_good_response(resp)
 
 
