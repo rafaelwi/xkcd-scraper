@@ -44,11 +44,11 @@ def get_raw_url(args):
             log_message('Error: Ending execution due to incorrect `batch` function syntax')
             log_message('Usage: python3 xkcdownloader.py batch <lower> <upper> | python3 xkcdownloader.py batch all')
             sys.exit()
-
         
         # Otherwise, ensure that the inputs are numbers
         if (args[2].isdecimal() ) & ( args[3].isdecimal()) & (int(args[3]) > int(args[2]) & (int(args[3]) <= int(get_latest()))):
             batch_download(args[2], args[3])
+        
         # Otherwise, throw an error
         else:
             log_message('Error: Ending execution due to incorrect `batch` function syntax')
@@ -120,7 +120,12 @@ def get_latest_comic_url():
     return raw_url
 # end get_latest_comic_url()
 
+"""Batch downloads a range of comics
 
+Args:
+    lower: lower bound of comics range
+    upper: upper bound of comics range
+"""
 def batch_download(lower, upper):
     # Batch download all images
     if str(lower) in 'all':
@@ -137,6 +142,7 @@ def batch_download(lower, upper):
     # End program
     log_message('Downloaded ' + str(int(upper) + 1 - int(lower)) +  ' comics')
     sys.exit()
+# end batch_download(upper, lower)
 
 
 """Validates that the URL passed from the command line is valid
