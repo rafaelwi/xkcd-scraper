@@ -10,6 +10,7 @@ import urllib.request
 import random
 import sys
 import time
+import lxml
 
 
 """Prints out the message passed in. Used for debugging
@@ -136,13 +137,16 @@ def batch_download(lower, upper):
         upper = get_latest()
 
     # For loop to download all comics
+    start = time.time()
     for i in range(int(lower), int(upper) + 1):
         raw_url = 'https://xkcd.com/' + str(i) + '/'
         img_url = get_img_url(raw_url)
         download_img (raw_url, img_url)
     
     # End program
+    end = time.time()
     log_message('Downloaded ' + str(int(upper) + 1 - int(lower)) +  ' comics')
+    log_message('Finished execution in ' + str(round(end - start, 4)) + ' secs')
     sys.exit()
 # end batch_download(upper, lower)
 
@@ -205,13 +209,8 @@ Returns:
     the URL of the image
 """
 def get_img_url(raw_url):
-    # Get the page and place into BeautifulSoup object
-    raw_html = get_page(raw_url)
-    bs4_html = BeautifulSoup(raw_html, 'html.parser')
-    log_message("Got page from URL <" + raw_url + ">")
-
-    # Get only the text from bs4_html
-    bs4_text = bs4_html.get_text()
+    # Get text from page
+    bs4_text = BeautifulSoup(get_page(raw_url), 'lxml').get_text()
     img_url_location = bs4_text.index('Image URL') # 'Image URL is what we are searching for in the text
     bs4_text = bs4_text[img_url_location:]
     bs4_text_list = bs4_text.splitlines()
