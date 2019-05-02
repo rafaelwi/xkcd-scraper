@@ -9,6 +9,8 @@ from bs4 import BeautifulSoup
 import urllib.request
 import random
 import sys
+import time
+import lxml
 
 
 """Prints out the message passed in. Used for debugging
@@ -33,11 +35,33 @@ Returns:
     the URL entered
 """
 def get_raw_url(args):
-    # Check number of args passed in
+    # If there are 3 args passed in
+    if args[1].lower() in 'batch':
+        # Check if 'all' is an arg
+        if (args[2].lower() in 'all'):
+            batch_download(1, get_latest())
+
+        # Ensures that 4 args are passed in
+        if len(args) != 4:
+            log_message('Error: Ending execution due to incorrect `batch` function syntax')
+            log_message('Usage: python3 xkcdownloader.py batch <lower> <upper> | python3 xkcdownloader.py batch all')
+            sys.exit()
+        
+        # Ensure that the inputs are numbers
+        if (args[2].isdecimal())  & (args[3].isdecimal()) & (int(args[3]) > int(args[2])) & (int(args[3]) <= int(get_latest())):
+            batch_download(args[2], args[3])
+        
+        # Otherwise, throw an error
+        else:
+            log_message('Error: Ending execution due to incorrect `batch` function syntax')
+            log_message('Usage: python3 xkcdownloader.py batch <lower> <upper> | python3 xkcdownloader.py batch all')
+            sys.exit()
+
     # If there is not 2 args passed in
     if len(args) != 2:
         log_message("Usage: python3 xkcdownloader.py <xkcd url> | python3 xkcdownlaoder.py random | python3 xkcdownloader.py <xkcd number>")
         sys.exit()
+
     # If there are 2 args passed in
     else:
         # Check what was passed in
@@ -61,7 +85,7 @@ def get_raw_url(args):
             
         # Otherwise, whatever arguement that has been passed in will be a valid link
         else:
-                raw_url = args[1]
+            raw_url = args[1]
     return raw_url
 # end get_raw_url(args)
 
@@ -97,6 +121,34 @@ def get_latest_comic_url():
     log_message ("Got URL: " + raw_url)
     return raw_url
 # end get_latest_comic_url()
+
+
+"""Batch downloads a range of comics
+
+Args:
+    lower: lower bound of comics range
+    upper: upper bound of comics range
+"""
+def batch_download(lower, upper):
+    # Batch download all images
+    if str(lower) in 'all':
+        # Get the number of the latest comic
+        lower = 1
+        upper = get_latest()
+
+    # For loop to download all comics
+    start = time.time()
+    for i in range(int(lower), int(upper) + 1):
+        raw_url = 'https://xkcd.com/' + str(i) + '/'
+        img_url = get_img_url(raw_url)
+        download_img (raw_url, img_url)
+    
+    # End program
+    end = time.time()
+    log_message('Downloaded ' + str(int(upper) + 1 - int(lower)) +  ' comics')
+    log_message('Finished execution in ' + str(round(end - start, 4)) + ' secs')
+    sys.exit()
+# end batch_download(upper, lower)
 
 
 """Validates that the URL passed from the command line is valid
@@ -157,13 +209,8 @@ Returns:
     the URL of the image
 """
 def get_img_url(raw_url):
-    # Get the page and place into BeautifulSoup object
-    raw_html = get_page(raw_url)
-    bs4_html = BeautifulSoup(raw_html, 'html.parser')
-    log_message("Got page from URL <" + raw_url + ">")
-
-    # Get only the text from bs4_html
-    bs4_text = bs4_html.get_text()
+    # Get text from page
+    bs4_text = BeautifulSoup(get_page(raw_url), 'lxml').get_text()
     img_url_location = bs4_text.index('Image URL') # 'Image URL is what we are searching for in the text
     bs4_text = bs4_text[img_url_location:]
     bs4_text_list = bs4_text.splitlines()

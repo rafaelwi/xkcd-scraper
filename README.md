@@ -4,11 +4,12 @@ xkcd comic scraper script in python3
 # Features
 - Can download xkcd comics from a link
 - Can download random xkcd comics
+- Can batch download xkcd comics
 
 
 # Running
 1. Clone the repo using `git clone https://github.com/rafaelwi/xkcdownloader.git`
-2. Ensure that you have both `requests` and `beautifulsoup4` dependencies installed with `pip3`
+2. Ensure that you have `requests`, `lxml`, and `beautifulsoup4` dependencies installed with `pip3`
 3. Run the script
 4. Find the images downloaded in the `imgs` folder
 
@@ -23,11 +24,19 @@ To get a random comic:
 To get the latest comic:
 `python3 xkcdownloader.py latest`
 
+Batch download all comics
+`python3 xkcdownloader.py batch all`
+
+Batch download the first 100 comics
+`python3 xkcdownloader.py batch 1 100`
+
 
 # To add
 - ~~Ability to download comics from just their number~~
 - ~~Ability to get the latest comic~~
-- Ability to configure where the images are downloaded
 - ~~Update function comments to PEP8 standards~~
-- Batch download function
+- ~~Batch download function~~
+- Ability to configure where the images are downloaded
+- Batch download starting from a specific comic to the newest one
+- Speed optimizations with getting the webpage
 - Ability to display image downloaded in terminal (?)
