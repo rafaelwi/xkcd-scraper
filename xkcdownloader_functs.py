@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 import urllib.request
 import random
 import sys
+import time
 
 
 """Prints out the message passed in. Used for debugging
