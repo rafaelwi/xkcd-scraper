@@ -34,9 +34,9 @@ Batch download the first 100 comics
 # To add
 - ~~Ability to download comics from just their number~~
 - ~~Ability to get the latest comic~~
-- Ability to configure where the images are downloaded
 - ~~Update function comments to PEP8 standards~~
 - ~~Batch download function~~
+- Ability to configure where the images are downloaded
 - Batch download starting from a specific comic to the newest one
 - Speed optimizations with getting the webpage
 - Ability to display image downloaded in terminal (?)
