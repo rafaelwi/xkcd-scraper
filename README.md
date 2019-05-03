@@ -16,7 +16,7 @@ xkcd comic scraper script in python3
 ## Using the script
 
 To get a specific comic: 
-`python3 xkcdownloader.py https://xkcd.com/1234/` or `python3 xkcdownloader.py 1234`
+`python3 xkcdownloader.py https://xkcd.com/1234/`  or  `python3 xkcdownloader.py 1234`
 
 To get a random comic:
 `python3 xkcdownloader.py random`
@@ -24,11 +24,16 @@ To get a random comic:
 To get the latest comic:
 `python3 xkcdownloader.py latest`
 
-Batch download all comics
+#### Batch Downloading
+
+Batch download all comics:
 `python3 xkcdownloader.py batch all`
 
-Batch download the first 100 comics
+Batch download the first 100 comics:
 `python3 xkcdownloader.py batch 1 100`
+
+Batch download from the 2000th comic to the most recent:
+ `python3 xkcdownloader.py batch 2000`
 
 
 # To add
@@ -36,7 +41,7 @@ Batch download the first 100 comics
 - ~~Ability to get the latest comic~~
 - ~~Update function comments to PEP8 standards~~
 - ~~Batch download function~~
+- ~~Batch download starting from a specific comic to the newest one~~
 - Ability to configure where the images are downloaded
-- Batch download starting from a specific comic to the newest one
 - Speed optimizations with getting the webpage
 - Ability to display image downloaded in terminal (?)
