@@ -142,6 +142,7 @@ def batch_download(lower, upper):
 
     # For loop to download all comics
     start = time.time()
+    log_message('Starting batch download of ' + str(int(upper) + 1 - int(lower)) + ' comics')
     for i in range(int(lower), int(upper) + 1):
         raw_url = 'https://xkcd.com/' + str(i) + '/'
         img_url = get_img_url(raw_url)
@@ -149,8 +150,7 @@ def batch_download(lower, upper):
     
     # End program
     end = time.time()
-    log_message('Downloaded ' + str(int(upper) + 1 - int(lower)) +  ' comics')
-    log_message('Finished execution in ' + str(round(end - start, 4)) + ' secs')
+    log_message('Downloaded ' + str(int(upper) + 1 - int(lower)) +  ' comics. Finished execution in ' + str(round(end - start, 4)) + ' secs')
     sys.exit()
 # end batch_download(upper, lower)
 
