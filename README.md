@@ -24,7 +24,7 @@ To get a random comic:
 To get the latest comic:
 `python3 xkcdownloader.py latest`
 
-#### Batch Downloading
+### Batch Downloading
 
 Batch download all comics:
 `python3 xkcdownloader.py batch all`
