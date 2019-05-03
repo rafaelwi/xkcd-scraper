@@ -6,11 +6,12 @@ from requests.exceptions import RequestException
 from requests import get
 from contextlib import closing
 from bs4 import BeautifulSoup
+import lxml
+
 import urllib.request
 import random
 import sys
 import time
-import lxml
 
 
 """Prints out the message passed in. Used for debugging
