@@ -42,7 +42,7 @@ def get_raw_url(args):
             batch_download(1, get_latest())
 
         # If only one number is passed in, download from passed in to newest
-        if (args[2].isdecimal()) & (int(args[2]) <= int(get_latest())):
+        if (args[2].isdecimal()) & (int(args[2]) <= int(get_latest())) & (int(args[2]) > 0 ):
             batch_download(args[2], get_latest())
 
         # Ensures that 4 args are passed in
@@ -52,13 +52,13 @@ def get_raw_url(args):
             sys.exit()
         
         # Ensure that the inputs are numbers
-        if (args[2].isdecimal())  & (args[3].isdecimal()) & (int(args[3]) > int(args[2])) & (int(args[3]) <= int(get_latest())):
+        if (args[2].isdecimal())  & (args[3].isdecimal()) & (int(args[3]) > int(args[2]) > 0) & (int(args[3]) <= int(get_latest())):
             batch_download(args[2], args[3])
         
         # Otherwise, throw an error
         else:
             log_message('Error: Ending execution due to incorrect `batch` function syntax')
-            log_message('Usage: python3 xkcdownloader.py batch <lower> <upper> | python3 xkcdownloader.py batch all')
+            log_message('Usage: python3 xkcdownloader.py batch <lower> <upper> | python3 xkcdownloader.py batch <lower> | python3 xkcdownloader.py batch all')
             sys.exit()
 
     # If there is not 2 args passed in
