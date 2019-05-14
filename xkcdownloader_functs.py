@@ -43,28 +43,38 @@ def get_raw_url(args):
             batch_download(1, get_latest())
 
         # If only one number is passed in, download from passed in to newest
-        if (args[2].isdecimal()) & (int(args[2]) <= int(get_latest())) & (int(args[2]) > 0 ):
+        if ((args[2].isdecimal()) & (int(args[2]) <= int(get_latest())) &
+        (int(args[2]) > 0 )):
             batch_download(args[2], get_latest())
 
         # Ensures that 4 args are passed in
         if len(args) != 4:
-            log_message('Error: Ending execution due to incorrect `batch` function syntax')
-            log_message('Usage: python3 xkcdownloader.py batch <lower> <upper> | python3 xkcdownloader.py batch <lower> | python3 xkcdownloader.py batch all')
+            log_message('''Error: Ending execution due to incorrect `batch` 
+                function syntax''')
+            log_message('''Usage: python3 xkcdownloader.py batch <lower> 
+                <upper> | python3 xkcdownloader.py batch <lower> | python3 
+                xkcdownloader.py batch all''')
             sys.exit()
         
         # Ensure that the inputs are numbers
-        if (args[2].isdecimal())  & (args[3].isdecimal()) & (int(args[3]) > int(args[2]) > 0) & (int(args[3]) <= int(get_latest())):
+        if ((args[2].isdecimal()) & 
+        (args[3].isdecimal()) & (int(args[3]) > int(args[2]) > 0) & 
+        (int(args[3]) <= int(get_latest()))):
             batch_download(args[2], args[3])
         
         # Otherwise, throw an error
         else:
-            log_message('Error: Ending execution due to incorrect `batch` function syntax')
-            log_message('Usage: python3 xkcdownloader.py batch <lower> <upper> | python3 xkcdownloader.py batch <lower> | python3 xkcdownloader.py batch all')
+            log_message('''Error: Ending execution due to incorrect `batch` function syntax''')
+            log_message('''Usage: python3 xkcdownloader.py batch <lower> 
+                <upper> | python3 xkcdownloader.py batch <lower> | python3 
+                xkcdownloader.py batch all''')
             sys.exit()
 
     # If there is not 2 args passed in
     if len(args) != 2:
-        log_message("Usage: python3 xkcdownloader.py <xkcd url> | python3 xkcdownlaoder.py random | python3 xkcdownloader.py <xkcd number>")
+        log_message('''Usage: python3 xkcdownloader.py <xkcd url> | 
+            python3 xkcdownlaoder.py random | python3 xkcdownloader.py 
+            <xkcd number>''')
         sys.exit()
 
     # If there are 2 args passed in
@@ -83,12 +93,15 @@ def get_raw_url(args):
             raw_url = 'https://xkcd.com/' + args[1] + '/'
 
         # If two arguments are passed in and cannot be split up as a link
-        elif (args[1].split('/')[2] != 'xkcd.com') | (not (args[1].split('/')[3].isdecimal())):
-            log_message("Error: Ending execution due to invalid input")
-            log_message("Usage: python3 xkcdownloader.py <xkcd url> | python3 xkcdownlaoder.py random | python3 xkcdownloader.py <xkcd number>")
+        elif ((args[1].split('/')[2] != 'xkcd.com') | 
+        (not (args[1].split('/')[3].isdecimal()))):
+            log_message('Error: Ending execution due to invalid input')
+            log_message('''Usage: python3 xkcdownloader.py <xkcd url> | 
+                python3 xkcdownlaoder.py random | 
+                python3 xkcdownloader.py <xkcd number>''')
             sys.exit()
             
-        # Otherwise, whatever arguement that has been passed in will be a valid link
+        # Otherwise, whatever arguement  passed in will be a valid link
         else:
             raw_url = args[1]
     return raw_url
@@ -143,7 +156,8 @@ def batch_download(lower, upper):
 
     # For loop to download all comics
     start = time.time()
-    log_message('Starting batch download of ' + str(int(upper) + 1 - int(lower)) + ' comics')
+    log_message('Starting batch download of ' + str(int(upper) + 
+        1 - int(lower)) + ' comics')
     for i in range(int(lower), int(upper) + 1):
         raw_url = 'https://xkcd.com/' + str(i) + '/'
         img_url = get_img_url(raw_url)
@@ -151,7 +165,8 @@ def batch_download(lower, upper):
     
     # End program
     end = time.time()
-    log_message('Downloaded ' + str(int(upper) + 1 - int(lower)) +  ' comics. Finished execution in ' + str(round(end - start, 4)) + ' secs')
+    log_message('Downloaded ' + str(int(upper) + 1 - int(lower)) +  
+    ' comics. Finished execution in ' + str(round(end - start, 4)) + ' secs')
     sys.exit()
 # end batch_download(upper, lower)
 
@@ -172,7 +187,8 @@ def validate_url(url):
     comic_value = url.split('/')[3]
 
     if ((int(comic_value) > int(latest_comic)) | (int(comic_value) <= 0)):
-        log_message("Error: Ending execution due to comic not being in valid range")
+        log_message("""Error: Ending execution due to comic not being in 
+        valid range""")
         sys.exit()
     else:
         return
@@ -216,7 +232,9 @@ Returns:
 def get_img_url(raw_url):
     # Get text from page
     bs4_text = BeautifulSoup(get_page(raw_url), 'lxml').get_text()
-    img_url_location = bs4_text.index('Image URL') # 'Image URL is what we are searching for in the text
+    
+    # Look for the string 'Image URL' in the page
+    img_url_location = bs4_text.index('Image URL') 
     bs4_text = bs4_text[img_url_location:]
     bs4_text_list = bs4_text.splitlines()
 
@@ -243,7 +261,8 @@ def get_page(url):
                 return None
 
     except RequestException as e:
-            log_message('Error during requests to {0} : {1}'.format(url, str(e)))
+            log_message('Error during requests to {0} : {1}'
+                .format(url, str(e)))
             return None
 # end get_page(url)
 
@@ -257,7 +276,8 @@ Returns:
     true if a successful connection has been made and false otherwise
 """
 def is_good_response(resp):
-    return (resp.status_code == 200 and resp.headers['Content-Type'].lower() is not None and resp.headers['Content-Type'].lower().find('html') > -1)
+    return (resp.status_code == 200 and resp.headers['Content-Type'].lower() 
+    is not None and resp.headers['Content-Type'].lower().find('html') > -1)
 # end is_good_response(resp)
 
 
