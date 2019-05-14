@@ -1,6 +1,14 @@
 # xkcdownloader_functions.py
 # github: rafaelwi
 
+"""
+TODO: Ensure all " are '
+TODO: Change the behaviour of if a URL is passed in, check if enoguh parts are
+passed in as a param so an out of range error doesn't show if a URL doesn't
+have enough parts
+TODO: Remove unnecessary ()
+"""
+
 # Imports
 from requests.exceptions import RequestException
 from requests import get
@@ -49,11 +57,14 @@ def get_raw_url(args):
 
         # Ensures that 4 args are passed in
         if len(args) != 4:
-            log_message('''Error: Ending execution due to incorrect `batch` 
-                function syntax''')
-            log_message('''Usage: python3 xkcdownloader.py batch <lower> 
-                <upper> | python3 xkcdownloader.py batch <lower> | python3 
-                xkcdownloader.py batch all''')
+            log_message((
+                'Error: Ending execution due to incorrect `batch`'
+                'function syntax'
+            ))
+            log_message(('Usage: python3 xkcdownloader.py batch <lower> '
+                '<upper> | python3 xkcdownloader.py batch <lower> | python3 '
+                'xkcdownloader.py batch all'
+            ))
             sys.exit()
         
         # Ensure that the inputs are numbers
@@ -64,17 +75,24 @@ def get_raw_url(args):
         
         # Otherwise, throw an error
         else:
-            log_message('''Error: Ending execution due to incorrect `batch` function syntax''')
-            log_message('''Usage: python3 xkcdownloader.py batch <lower> 
-                <upper> | python3 xkcdownloader.py batch <lower> | python3 
-                xkcdownloader.py batch all''')
+            log_message((
+                'Error: Ending execution due to incorrect `batch` '
+                'function syntax'
+            ))
+            log_message((
+                'Usage: python3 xkcdownloader.py batch <lower> '
+                '<upper> | python3 xkcdownloader.py batch <lower> | python3 '
+                'xkcdownloader.py batch all'
+            ))
             sys.exit()
 
     # If there is not 2 args passed in
     if len(args) != 2:
-        log_message('''Usage: python3 xkcdownloader.py <xkcd url> | 
-            python3 xkcdownlaoder.py random | python3 xkcdownloader.py 
-            <xkcd number>''')
+        log_message((
+            'Usage: python3 xkcdownloader.py <xkcd url> | '
+            'python3 xkcdownlaoder.py random | python3 xkcdownloader.py '
+            '<xkcd number>'
+        ))
         sys.exit()
 
     # If there are 2 args passed in
@@ -96,9 +114,11 @@ def get_raw_url(args):
         elif ((args[1].split('/')[2] != 'xkcd.com') | 
         (not (args[1].split('/')[3].isdecimal()))):
             log_message('Error: Ending execution due to invalid input')
-            log_message('''Usage: python3 xkcdownloader.py <xkcd url> | 
-                python3 xkcdownlaoder.py random | 
-                python3 xkcdownloader.py <xkcd number>''')
+            log_message((
+                'Usage: python3 xkcdownloader.py <xkcd url> | '
+                'python3 xkcdownlaoder.py random | python3 xkcdownloader.py '
+                '<xkcd number>'
+            ))
             sys.exit()
             
         # Otherwise, whatever arguement  passed in will be a valid link
@@ -165,8 +185,11 @@ def batch_download(lower, upper):
     
     # End program
     end = time.time()
-    log_message('Downloaded ' + str(int(upper) + 1 - int(lower)) +  
-    ' comics. Finished execution in ' + str(round(end - start, 4)) + ' secs')
+    log_message((
+        'Downloaded ' + str(int(upper) + 1 - int(lower)) +  
+        ' comics. Finished execution in ' + str(round(end - start, 4)) + 
+        ' secs'
+    ))
     sys.exit()
 # end batch_download(upper, lower)
 
@@ -187,8 +210,9 @@ def validate_url(url):
     comic_value = url.split('/')[3]
 
     if ((int(comic_value) > int(latest_comic)) | (int(comic_value) <= 0)):
-        log_message("""Error: Ending execution due to comic not being in 
-        valid range""")
+        log_message((
+            'Error: Ending execution due to comic not being in valid range'
+        ))
         sys.exit()
     else:
         return
